@@ -1,0 +1,8 @@
+name: astrbot_plugin_command_panel
+desc: 开放指令面板：发送指令后生成一张图片，按插件分类展示所有可用指令、功能简介与使用权限
+version: v1.0.0
+author: yiyao
+repo: https://github.com/Joker854/astrbot_plugin_command_panel
+display_name: 指令面板
+short_desc: 一张图看全群内可用指令
+astrbot_version: ">=4.16,<5"

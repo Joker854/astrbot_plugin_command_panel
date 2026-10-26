@@ -1,0 +1,47 @@
+{
+  "panel_title": {
+    "description": "面板标题",
+    "type": "string",
+    "default": "指令面板",
+    "hint": "显示在图片顶部的标题"
+  },
+  "theme_color": {
+    "description": "主题色",
+    "type": "string",
+    "default": "#5b8ff9",
+    "hint": "十六进制颜色值，如 #5b8ff9，用于标题栏和强调色"
+  },
+  "show_stats": {
+    "description": "显示统计信息",
+    "type": "bool",
+    "default": true,
+    "hint": "在图片底部显示插件数与指令数统计"
+  },
+  "show_builtin_plugins": {
+    "description": "显示内置插件",
+    "type": "bool",
+    "default": true,
+    "hint": "是否在面板中展示 AstrBot 内置插件（如内置指令）"
+  },
+  "hide_self": {
+    "description": "隐藏本插件",
+    "type": "bool",
+    "default": false,
+    "hint": "开启后面板中不再展示指令面板插件自身"
+  },
+  "hide_admin_commands_for_member": {
+    "description": "对非管理员隐藏管理员指令",
+    "type": "bool",
+    "default": false,
+    "hint": "开启后，普通成员查看面板时不显示仅管理员可用的指令"
+  },
+  "plugins_config": {
+    "description": "插件展示规则（JSON）",
+    "type": "text",
+    "editor_mode": true,
+    "editor_language": "json",
+    "default": "{\n  \"astrbot_plugin_xxx\": {\n    \"alias\": \"工具箱\",\n    \"show\": true,\n    \"desc\": \"自定义插件描述\",\n    \"hide_commands\": [\"^test$\", \"debug\"]\n  }\n}",
+    "hint": "键为插件名（metadata.yaml 中的 name，也可用插件目录名）。alias：图片中只展示别名；show：false 则不展示该插件；desc：覆盖插件描述；hide_commands：正则列表，命中的指令不展示",
+    "obvious_hint": true
+  }
+}

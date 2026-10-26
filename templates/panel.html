@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 760px;
+    font-family: "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
+    background: #f2f4f8;
+    padding: 24px;
+  }
+  .panel {
+    background: #ffffff;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+  }
+  .header {
+    background: {{ theme }};
+    color: #ffffff;
+    padding: 28px 32px 22px;
+  }
+  .header h1 { font-size: 26px; letter-spacing: 2px; }
+  .header .prefix {
+    margin-top: 8px;
+    font-size: 13px;
+    opacity: 0.85;
+  }
+  .header .prefix code {
+    background: rgba(255, 255, 255, 0.22);
+    border-radius: 4px;
+    padding: 1px 8px;
+    font-family: Consolas, monospace;
+  }
+  .plugin {
+    padding: 18px 32px 10px;
+    border-bottom: 1px solid #eef0f4;
+  }
+  .plugin:last-of-type { border-bottom: none; }
+  .plugin-head {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin-bottom: 4px;
+  }
+  .plugin-name {
+    font-size: 17px;
+    font-weight: 600;
+    color: #1f2430;
+  }
+  .plugin-name::before {
+    content: "";
+    display: inline-block;
+    width: 6px;
+    height: 16px;
+    border-radius: 3px;
+    background: {{ theme }};
+    margin-right: 8px;
+    vertical-align: -2px;
+  }
+  .plugin-version {
+    font-size: 12px;
+    color: #98a2b3;
+  }
+  .plugin-desc {
+    font-size: 12px;
+    color: #98a2b3;
+    margin: 2px 0 10px 14px;
+  }
+  .cmd {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 8px 0 8px 14px;
+    border-top: 1px dashed #eef0f4;
+  }
+  .cmd-name {
+    flex: 0 0 auto;
+    max-width: 300px;
+    font-family: Consolas, monospace;
+    font-size: 13px;
+    color: {{ theme }};
+    background: #f6f8fc;
+    border-radius: 6px;
+    padding: 3px 8px;
+    word-break: break-all;
+  }
+  .cmd-desc {
+    flex: 1 1 auto;
+    font-size: 13px;
+    color: #4a5568;
+    line-height: 1.6;
+    padding-top: 2px;
+  }
+  .cmd-alias {
+    display: block;
+    font-size: 11px;
+    color: #98a2b3;
+  }
+  .perm {
+    flex: 0 0 auto;
+    font-size: 11px;
+    border-radius: 10px;
+    padding: 2px 10px;
+    margin-top: 2px;
+  }
+  .perm-all { color: #2f855a; background: #e6f6ec; }
+  .perm-admin { color: #c53030; background: #fdecec; }
+  .footer {
+    padding: 14px 32px;
+    font-size: 12px;
+    color: #98a2b3;
+    text-align: center;
+    background: #fafbfc;
+  }
+</style>
+</head>
+<body>
+<div class="panel">
+  <div class="header">
+    <h1>{{ title | e }}</h1>
+    <div class="prefix">指令前缀 <code>{{ wake_prefix | e }}</code></div>
+  </div>
+  {% for plugin in plugins %}
+  <div class="plugin">
+    <div class="plugin-head">
+      <span class="plugin-name">{{ plugin.name | e }}</span>
+      {% if plugin.version %}<span class="plugin-version">{{ plugin.version | e }}</span>{% endif %}
+    </div>
+    {% if plugin.desc %}<div class="plugin-desc">{{ plugin.desc | e }}</div>{% endif %}
+    {% for cmd in plugin.commands %}
+    <div class="cmd">
+      <span class="cmd-name">{{ wake_prefix | e }}{{ cmd.name | e }}{% if cmd.params %} {{ cmd.params | e }}{% endif %}</span>
+      <span class="cmd-desc">
+        {{ cmd.desc | e }}
+        {% if cmd.aliases %}<span class="cmd-alias">别名：{{ cmd.aliases | join(" / ") | e }}</span>{% endif %}
+      </span>
+      <span class="perm {% if cmd.perm == "所有人" %}perm-all{% else %}perm-admin{% endif %}">{{ cmd.perm | e }}</span>
+    </div>
+    {% endfor %}
+  </div>
+  {% endfor %}
+  {% if show_stats %}
+  <div class="footer">{{ stats | e }}</div>
+  {% endif %}
+</div>
+</body>
+</html>
